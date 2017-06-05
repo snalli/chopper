@@ -89,7 +89,7 @@ void punch_file(char *filepath, char *confpath)
 
     id = 0;
     conffile >> off >> len;
-    //cout << id << ":" << off << " " << len << endl;
+    cout << id << ":" << off << " " << len << endl;
     while ( off != -1 && len != -1 ) {
         if ( id == 0 ) {
             // first pair is used to 
@@ -105,7 +105,7 @@ void punch_file(char *filepath, char *confpath)
         if ( !(id == 0 && len == -2) ) {
             ret = fallocate(fd, flag, off, len);
             if ( ret == -1 ) {
-                //perror("failed to fallocate:");
+                perror("failed to fallocate:");
                 ostringstream oss;
                 oss << "id:" << id << "msg:" << strerror(errno) << endl;
                 logger->write( oss.str().c_str() );
@@ -115,7 +115,7 @@ void punch_file(char *filepath, char *confpath)
         }
         id++;
         conffile >> off >> len;
-        //cout << id << ":" << off << " " << len << endl;
+        cout << id << ":" << off << " " << len << endl;
     }
    
     conffile.close();
